@@ -6,6 +6,6 @@ flask-login
 flask-bcrypt
 redis
 gunicorn
-psycopg2
+psycopg2-binary
 markdown2
 requests
