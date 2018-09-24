@@ -19,6 +19,8 @@ The AEON Funding System was written entirely in Python. It was originally develo
 
 ## Installation (locally)
 
+set environment variables for: COINCODE, PSQL_USER_FFS,PSQL_PASS_FFS, DB_FFS
+
 Better instructions to follow in the future.
 
 ### Install dependancies
