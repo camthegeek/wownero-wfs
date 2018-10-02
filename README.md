@@ -39,6 +39,8 @@ cp settings.py_example settings.py
 - change settings accordingly
 python run_dev.py
 ```
+1. register as a new user on the site
+2. flip the admin bit on for the user using psql or pgadmin
 
 ### to-do
 
@@ -47,3 +49,4 @@ python run_dev.py
 - [] Define one exchange API URL
 - [] Automated setup
 - [] User follow proposals
+- [] flask migrate for db migrations
