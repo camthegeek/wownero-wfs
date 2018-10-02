@@ -1,4 +1,4 @@
-from wowfunding.factory import create_app
+from funding.factory import create_app
 import settings
 
 if __name__ == '__main__':

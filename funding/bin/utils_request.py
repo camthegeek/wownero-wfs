@@ -7,7 +7,7 @@ from funding.orm.orm import Proposal, User, Comment
 
 @app.context_processor
 def templating():
-    from flask.ext.login import current_user
+    from flask_login import current_user
     recent_comments = db_session.query(Comment).filter(Comment.automated == False).order_by(Comment.date_added.desc()).limit(8).all()
     summary_data = Summary.fetch_stats()
     newest_users = db_session.query(User).filter(User.admin == False).order_by(User.registered_on.desc()).limit(5).all()

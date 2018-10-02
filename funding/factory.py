@@ -29,12 +29,12 @@ def create_app():
     app.secret_key = settings.SECRET
 
     # flask-login
-    from flask.ext.login import LoginManager
+    from flask_login import LoginManager
     login_manager = LoginManager()
     login_manager.init_app(app)
     login_manager.login_view = 'login'
 
-    from flask.ext.bcrypt import Bcrypt
+    from flask_bcrypt import Bcrypt
     bcrypt = Bcrypt(app)
 
     @login_manager.user_loader
