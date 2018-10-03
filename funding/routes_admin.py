@@ -1,4 +1,4 @@
-from flask.ext.login import login_required
+from flask_login import login_required
 from funding.factory import app, db_session
 
 

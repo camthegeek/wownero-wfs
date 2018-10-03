@@ -1,6 +1,6 @@
 from datetime import datetime
 from flask import request, redirect, Response, abort, render_template, url_for, flash, make_response, send_from_directory, jsonify
-from flask.ext.login import login_user , logout_user , current_user , login_required, current_user
+from flask_login import login_user , logout_user , current_user , login_required, current_user
 from flask_yoloapi import endpoint, parameter
 import settings
 from funding.factory import app, db_session
@@ -21,7 +21,8 @@ def api_proposals_get(status, cat, limit, offset):
         return 'error', 500
     return [p.json for p in proposals]
 
-@app.route('/api/1/convert/aeon-usd')
+
+@app.route('/api/1/convert/' + settings.COINNAME + '-usd')
 @endpoint.api(
     parameter('amount', type=int, location='args', required=True)
 )

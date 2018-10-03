@@ -19,6 +19,8 @@ The AEON Funding System was written entirely in Python. It was originally develo
 
 ## Installation (locally)
 
+set environment variables for: COINCODE, PSQL_USER_FFS,PSQL_PASS_FFS, DB_FFS
+
 Better instructions to follow in the future.
 
 ### Install dependancies
@@ -37,6 +39,8 @@ cp settings.py_example settings.py
 - change settings accordingly
 python run_dev.py
 ```
+1. register as a new user on the site
+2. flip the admin bit on for the user using psql or pgadmin
 
 ### to-do
 
@@ -45,3 +49,4 @@ python run_dev.py
 - [] Define one exchange API URL
 - [] Automated setup
 - [] User follow proposals
+- [] flask migrate for db migrations
