@@ -5,13 +5,29 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            <span class="form-text text-muted" style="margin-top: -2px;">
-                Proposals made by '{{user.username}}'
-            </span>
+            <div class="col-lg-4" style="display: inline-block; vertical-align: top;">
+                <img src="{{ user.avatar(128) }}">
+            </div>
+            
+            <div class="col-lg-6" style=" display: inline-block; vertical-align: top;">
+                <h2>{{user.username}}</h2>
+                <p>Last online: {% if user.last_online %} {{ user.last_online }} {% else %} Never! {%endif%}</p>
+                {% if user.username == current_user.username %}
+                    <p><a href="/account/reset/password">Change password?</a></p>
+                {% endif %}
+            </div>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
+            <span style="font-weight: bold; font-size: 14px;">
+                    {% if user.username == current_user.username %}
+                        Your Proposals
+                {% else %}
+                    Proposals made by '{{user.username}}'
+                {%endif%}
+            </span>
+            <br/>
             {% if user.proposals %}
                 <table class="table table-proposal table-hover" style="margin-bottom:6px;">
                     <tbody>
@@ -32,14 +48,25 @@
                     </tbody>
                 </table>
             {% else %}
-                This user has not submitted any proposals yet.
+                {% if user.username == current_user.username %}
+                    You have not submitted any proposals.
+                {% else %}
+                    This user has not submitted any proposals yet.
+                {% endif %}
             {% endif %}
                     <hr>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
-            Comments made by {{user.username}}
+            {% if user.username == current_user.username %}
+                <span style="font-weight: bold; font-size: 14px;">
+                    Your Comments
+            </br>
+                {% else %}
+                    Comments made by '{{user.username}}' <br/>
+                {%endif%}
+                 </span>
             {% if user.comments %}
                 <table class="table table-proposal table-hover" style="margin-bottom:6px;">
                     <tbody>
@@ -55,12 +82,16 @@
                         {% endfor %}
                     </tbody>
                 </table>
-            {% else %}
-                This user has not submitted any proposals yet.
+            {% else %} 
+                {% if user.username == current_user.username %}
+                    You have not commented on any proposals.
+                {% else %}                    
+                    This user has not commented on any proposals.
+                {% endif %}
             {% endif %}
         </div>
     </div>
-    <br>
+   <br>
 
 </div>
 {% else %}
