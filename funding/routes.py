@@ -1,12 +1,22 @@
 from datetime import datetime
 from flask import request, redirect, Response, abort, render_template, url_for, flash, make_response, send_from_directory, jsonify
-from flask.login import login_user , logout_user , current_user, login_required, current_user
+from flask_login import login_user , logout_user , current_user, login_required, current_user
 from flask_yoloapi import endpoint, parameter
 from itsdangerous import URLSafeTimedSerializer, BadData, SignatureExpired
 import settings
 from funding.factory import app, db_session
 from funding.orm.orm import Proposal, User, Comment
 from flask_mail import Message
+
+@app.before_request
+def before_request():
+    if current_user.is_authenticated:
+        try:
+            current_user.last_online = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            db_session.commit()
+            db_session.flush()
+        except: 
+            db_session.rollback()
 
 @app.route('/')
 def index():
