@@ -6,6 +6,7 @@ import settings
 import pyqrcode
 import os
 import png
+from hashlib import md5
 
 base = declarative_base(name="Model")
 
@@ -17,6 +18,7 @@ class User(base):
     email = sa.Column(sa.String(50), unique=True)
     registered_on = sa.Column(sa.DateTime)
     admin = sa.Column(sa.Boolean, default=False)
+    last_online = sa.Column(sa.DateTime, default=datetime.utcnow)
     proposals = relationship('Proposal', back_populates="user")
     comments = relationship("Comment", back_populates="user")
 
@@ -67,6 +69,10 @@ class User(base):
         except Exception as ex:
             db_session.rollback()
             raise
+    
+    def avatar(self, size):
+        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, size)
 
     @staticmethod
     def edit(email: str, password: str): 
@@ -385,7 +391,7 @@ class Payout(base):
     @classmethod
     def add(cls, proposal_id, amount, to_address):
         # @TODO: validate that we can make this payout; check previous payouts
-        from flask.login import current_user
+        from flask_login import current_user
         if not current_user.admin:
             raise Exception("user must be admin to add a payout")
         from funding.factory import db_session
@@ -464,7 +470,7 @@ class Comment(base):
     @staticmethod
     def lock(cid: int):
         from funding.factory import db_session
-        from flask.login import current_user
+        from flask_login import current_user
         if not current_user.admin:
             raise Exception("admin required")
         comment = Comment.find_by_id(cid=cid)
@@ -481,7 +487,7 @@ class Comment(base):
 
     @classmethod
     def add_comment(cls, pid: int, user_id: int, message: str, cid: int = None, message_id: int = None, automated=False):
-        from flask.login import current_user
+        from flask_login import current_user
         from funding.factory import db_session
         if not message:
             raise Exception("empty message")
